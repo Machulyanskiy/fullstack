@@ -1,0 +1,77 @@
+<div class="page-title">
+  <h4>
+    Review yesterday ({{yesterday | date: "dd.MM.yyyy"}})
+    <i class="material-icons black-text pointer" (click)="openInfo()">info_outline</i>
+  </h4>
+</div>
+
+<div class="row" *ngIf="data$ | async as data; else loader">
+  <div class="col s12 l6">
+    <div class="card light-blue lighten-2 white-text">
+      <div class="card-content">
+        <span class="card-title">Proceeds:</span>
+        <h3>{{data.proceeds.yesterday}}₴</h3>
+        <h3 class="m0 mb1"
+            [ngClass]="{
+              'green-text text-darken-2': data.proceeds.isHigher,
+              'red-text': !data.proceeds.isHigher
+            }">
+          <i class="material-icons">
+            {{data.proceeds.isHigher ? 'arrow_upward' : 'arrow_downward'}}
+          </i>
+          {{data.proceeds.percent}}%
+        </h3>
+        <p>
+          Yesterday's business proceeds is
+          {{data.proceeds.percent}}%
+          {{data.proceeds.isHigher ? 'higher' : 'lower'}}
+          the average:
+          {{data.proceeds.compare}}
+          ₴ per day
+        </p>
+      </div>
+    </div>
+  </div>
+
+  <div class="col s12 l6">
+    <div class="card orange lighten-2 white-text">
+      <div class="card-content">
+        <span class="card-title">Orders:</span>
+        <h3>{{data.orders.yesterday}} ord.</h3>
+        <h3 class="m0 mb1"
+            [ngClass]="{
+              'green-text text-darken-2': data.orders.isHigher,
+              'red-text': !data.orders.isHigher
+            }">
+          <i class="material-icons">
+            {{data.orders.isHigher ? 'arrow_upward' : 'arrow_downward'}}
+          </i>
+          {{data.orders.percent}}%
+        </h3>
+        <p>
+          Amount of yesterday's orders is
+          {{data.orders.percent}}%
+          {{data.orders.isHigher ? 'higher' : 'lower'}}
+          the average:
+          {{data.orders.compare}}
+          orders per day
+        </p>
+      </div>
+    </div>
+  </div>
+</div>
+
+<ng-template #loader>
+  <app-loader></app-loader>
+</ng-template>
+
+
+<div class="tap-target" data-target="menu" #tapTarget>
+  <div class="tap-target-content">
+    <h5>Why we need this page?</h5>
+    <p>
+      Page “Overview” show the dynamics of sales for the previous day.
+      Comparison with average values will help you understand how your business is doing.
+    </p>
+  </div>
+</div>
